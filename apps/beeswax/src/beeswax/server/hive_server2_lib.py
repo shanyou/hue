@@ -168,7 +168,7 @@ class HiveServerTable(Table):
     if self._details is None:
       props = dict([(stat['col_name'], stat['data_type']) for stat in self.properties if stat['col_name'] != 'Table Parameters:'])
       serde = props.get('SerDe Library:', '')
-      
+
       self._details = {
           'stats': dict([(stat['data_type'], stat['comment']) for stat in self.stats]),
           'properties': {
@@ -176,7 +176,7 @@ class HiveServerTable(Table):
             'create_time': props.get('CreateTime:'),
             'compressed': props.get('Compressed:', 'No') != 'No',
             'format': 'parquet' if 'ParquetHiveSerDe' in serde else ('text' if 'LazySimpleSerDe' in serde else serde.rsplit('.', 1)[-1])
-        } 
+        }
       }
 
     return self._details
@@ -568,8 +568,8 @@ class HiveServerClient:
 
     if self.query_server['server_name'] == 'beeswax': # All the time
       kwargs['configuration'].update({'hive.server2.proxy.user': user.username})
-      kwargs['configuration'].update({'hive.server2.logging.operation.verbose': 'true'})
-      kwargs['configuration'].update({'hive.server2.logging.operation.level': 'VERBOSE'})
+      #kwargs['configuration'].update({'hive.server2.logging.operation.verbose': 'true'})
+      #kwargs['configuration'].update({'hive.server2.logging.operation.level': 'VERBOSE'})
 
     if self.query_server['server_name'] == 'sparksql': # All the time
       kwargs['configuration'].update({'hive.server2.proxy.user': user.username})
